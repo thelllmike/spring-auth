@@ -7,7 +7,7 @@ class Home extends Component {
             <div className="home-container">
                 <div className="container">
                 
-                    <h1 className="home-title">PAF New </h1>
+                    <h1 className="home-title">Google Auth </h1>
                 </div>
             </div>
         )

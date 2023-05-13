@@ -1,39 +1,25 @@
 import React, { Component } from "react";
+import axios from "axios";
 import "../Styles/p.css";
-import { API_BASE_URL, ACCESS_TOKEN } from '../../constants';
+// import { API_BASE_URL, ACCESS_TOKEN } from '../../constants';
 
 export default class Profile extends Component {
     constructor(props) {
         super(props);
         console.log(props);
+        this.deletePost = this.deletePost.bind(this);
     }
 
-    handleDelete = () => {
-        const { currentUser } = this.props;
-
-        // Send a DELETE request to the server to delete the user
-        fetch(API_BASE_URL + '/user/' + currentUser.id, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                // If the user was successfully deleted, redirect to the home page
-                window.location.href = '/';
-            } else {
-                // If there was an error deleting the user, show an error message
-                throw new Error('Failed to delete user');
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            alert('Failed to delete user');
-        });
+    async deletePost(id) {
+        await axios.delete(`http://localhost:8080/auth/user/${id}`);
+        this.props.loadPosts();
+        alert('User deleted successfully!');
+        localStorage.removeItem('accessToken');
+        window.location.href = '/login';
     }
 
     render() {
+        const { currentUser } = this.props;
         return (
             <div className='profile-container'>
                 <div className='container'>
@@ -44,16 +30,16 @@ export default class Profile extends Component {
                         <table>
                             <tr>
                                 <td>User Name</td>
-                                <td className='profile-name'>{this.props.currentUser.name}</td>
+                                <td className='profile-name'>{currentUser.name}</td>
                             </tr>
                             <tr>
                                 <td>Email</td>
-                                <td className='profile-email'>{this.props.currentUser.email}</td>
+                                <td className='profile-email'>{currentUser.email}</td>
                             </tr>
                         </table>
                         <div className='profile-buttons'>
                             <button className='profile-edit-button' onClick={this.props.handleEdit}>Edit</button>
-                            <button className='profile-delete-button' onClick={this.handleDelete}>Delete</button>
+                            <button className='profile-delete-button' onClick={() => this.deletePost(currentUser.id)}>Delete</button>
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ import { login } from '../../util/APIUtils';
 import { Link, Redirect } from 'react-router-dom'
 import fbLogo from '../../img/fb-logo.png';
 import googleLogo from '../../img/google-logo.png';
+import "../Styles/Page.css";
 
 import Alert from 'react-s-alert';
 
@@ -101,25 +102,63 @@ class LoginForm extends Component {
         });
     }
     
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="form-item">
-                    <input type="email" name="email" 
-                        className="form-control" placeholder="Email"
-                        value={this.state.email} onChange={this.handleInputChange} required/>
-                </div>
-                <div className="form-item">
-                    <input type="password" name="password" 
-                        className="form-control" placeholder="Password"
-                        value={this.state.password} onChange={this.handleInputChange} required/>
-                </div>
-                <div className="form-item">
-                    <button type="submit" className="btn btn-block btn-primary">Login</button>
-                </div>
-            </form>                    
-        );
-    }
+     render() {
+         return (
+             <form onSubmit={this.handleSubmit}>
+                 <div className="form-item">
+                     <input type="email" name="email" 
+                         className="form-control" placeholder="Email"
+                         value={this.state.email} onChange={this.handleInputChange} required/>
+                 </div>
+                 <div className="form-item">
+                     <input type="password" name="password" 
+                         className="form-control" placeholder="Password"
+                         value={this.state.password} onChange={this.handleInputChange} required/>
+                 </div>
+                 <div className="form-item">
+                     <button type="submit" className="btn btn-block btn-primary">Login</button>
+                 </div>
+             </form>                    
+         );
+     }
+
+
+
+    // render() {
+	// 	return (
+    //         <form onSubmit={this.handleSubmit}>
+	// 		<div className='Page'>
+			
+	// 			<div class='inFormBackground'>
+	// 				<div class='circle'></div>
+	// 				<div class='circle'></div>
+	// 				<div class='Form'>
+	// 					<form onsubmit='return false'>
+	// 						<div class='title'>
+	// 							<h3>Login Here</h3>
+	// 						</div>
+	// 						<div class='inputGroup'>
+    //                         <label htmlFor='username'>Email</label>
+	// 							<input type='email' placeholder='Enter Email' id='email'  value={this.state.email} onChange={this.handleInputChange} required />
+	// 						</div>
+	// 						<div class='inputGroup'>
+    //                         <label htmlFor='username'>Password</label>
+	// 							<input
+	// 								type='password'
+	// 								placeholder='Enter Password'
+	// 								id='password'value={this.state.password} onChange={this.handleInputChange} required
+	// 							/>
+	// 						</div>
+					
+    //             <button class='submit'>Log In</button>
+	// 					</form>
+	// 				</div>
+	// 			</div>
+	// 		</div>
+    //         </form>   
+	// 	);
+	// }
+
 }
 
 export default Login

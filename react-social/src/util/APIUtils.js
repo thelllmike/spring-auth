@@ -49,3 +49,27 @@ export function signup(signupRequest) {
         body: JSON.stringify(signupRequest)
     });
 }
+
+//update delete
+export function deleteUser(userId) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/user/" + userId,
+        method: 'DELETE'
+    });
+}
+
+export function updateUser(userId, updateRequest) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/user/" + userId,
+        method: 'PUT',
+        body: JSON.stringify(updateRequest)
+    });
+}

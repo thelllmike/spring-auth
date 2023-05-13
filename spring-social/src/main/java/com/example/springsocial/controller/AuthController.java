@@ -78,5 +78,52 @@ public class AuthController {
         return ResponseEntity.created(location)
                 .body(new ApiResponse(true, "User registered successfully@"));
     }
+    
+    @PutMapping("/user/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @Valid @RequestBody SignUpRequest signUpRequest) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("User not found"));
+
+        user.setName(signUpRequest.getName());
+        user.setEmail(signUpRequest.getEmail());
+        user.setPassword(signUpRequest.getPassword());
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        User result = userRepository.save(user);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath().path("/user/me")
+                .buildAndExpand(result.getId()).toUri();
+
+        return ResponseEntity.created(location)
+                .body(new ApiResponse(true, "User updated successfully"));
+    }
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("User not found"));
+
+        userRepository.delete(user);
+
+        return ResponseEntity.ok()
+                .body(new ApiResponse(true, "User deleted successfully"));
+    }
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("User not found"));
+
+        SignUpRequest signUpRequest = new SignUpRequest();
+        signUpRequest.setName(user.getName());
+        signUpRequest.setEmail(user.getEmail());
+        signUpRequest.setPassword(user.getPassword());
+
+        return ResponseEntity.ok(signUpRequest);
+    }
+
+    
+
 
 }

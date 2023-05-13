@@ -98,3 +98,28 @@ button {
 button:hover {
 	background-color: #2a89b3;
 }
+
+
+.profile-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.profile-edit-button, .profile-delete-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-right: 1rem;
+    padding: 0.8rem 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    border-radius: 0.3rem;
+}
+
+.profile-edit-button:hover, .profile-delete-button:hover {
+    background-color: #3e8e41;
+}

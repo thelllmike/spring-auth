@@ -1,6 +1,7 @@
 package com.example.springsocial.controller;
 
 import com.example.springsocial.exception.BadRequestException;
+import com.example.springsocial.exception.ResourceNotFoundException;
 import com.example.springsocial.model.AuthProvider;
 import com.example.springsocial.model.User;
 import com.example.springsocial.payload.ApiResponse;
@@ -110,17 +111,24 @@ public class AuthController {
         return ResponseEntity.ok()
                 .body(new ApiResponse(true, "User deleted successfully"));
     }
-    @GetMapping("/user/{id}")
-    public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException("User not found"));
+//    @GetMapping("/user/{id}")
+//    public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
+//        User user = userRepository.findById(id)
+//                .orElseThrow(() -> new BadRequestException("User not found"));
+//
+//        SignUpRequest signUpRequest = new SignUpRequest();
+//        signUpRequest.setName(user.getName());
+//        signUpRequest.setEmail(user.getEmail());
+//        signUpRequest.setPassword(user.getPassword());
+//
+//        return ResponseEntity.ok(signUpRequest);
+//    }
 
-        SignUpRequest signUpRequest = new SignUpRequest();
-        signUpRequest.setName(user.getName());
-        signUpRequest.setEmail(user.getEmail());
-        signUpRequest.setPassword(user.getPassword());
-
-        return ResponseEntity.ok(signUpRequest);
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUser(@PathVariable(value = "id") Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
+        return ResponseEntity.ok().body(user);
     }
 
     

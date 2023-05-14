@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import "../Styles/p.css";
 // import { API_BASE_URL, ACCESS_TOKEN } from '../../constants';
+import { Link } from "react-router-dom";
+
+
 
 export default class Profile extends Component {
     constructor(props) {
@@ -12,7 +15,7 @@ export default class Profile extends Component {
 
     async deletePost(id) {
         await axios.delete(`http://localhost:8080/auth/user/${id}`);
-        this.props.loadPosts();
+       
         alert('User deleted successfully!');
         localStorage.removeItem('accessToken');
         window.location.href = '/login';
@@ -38,7 +41,11 @@ export default class Profile extends Component {
                             </tr>
                         </table>
                         <div className='profile-buttons'>
-                            <button className='profile-edit-button' onClick={this.props.handleEdit}>Edit</button>
+                        <Link
+											className=''
+											to={`/editUder/${currentUser.id}`}>
+											Edit
+										</Link>
                             <button className='profile-delete-button' onClick={() => this.deletePost(currentUser.id)}>Delete</button>
                         </div>
                     </div>

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './Signup.css';
 import axios from 'axios';
-import { Link, useParams, useHistory ,navigate} from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-function EditUser() {
-    let navigate = useNavigate();
-
+function EditUser({ history, match }) {
+  const { id } = match.params;
 
   const [user, setUser] = useState({
     name: "",
     email: "",
-  
   });
 
   const { name, email } = user;
@@ -58,8 +56,6 @@ function EditUser() {
           onChange={onInputChange}
         />
       </div>
-     
-     
       <div className="form-item">
         <button type="submit" className="btn btn-block btn-primary">
           Edit
@@ -69,4 +65,4 @@ function EditUser() {
   );
 }
 
-export default EditUser;
+export default withRouter(EditUser);
